@@ -216,8 +216,8 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    ile_min += -1
     if (ile_min >= 0) {
+        ile_min += -1
         create_rock()
     }
 })
@@ -479,29 +479,56 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     music.baDing.play()
     otherSprite.destroy()
-    controller.moveSprite(mySprite, 200, 200)
-    info.startCountdown(10)
+    if (otherSprite.z == 1) {
+        controller.moveSprite(mySprite, 200, 200)
+        info.startCountdown(10)
+    } else if (otherSprite.z == 2) {
+        ile_min += 1
+    }
     create_ciastko()
 })
 function create_ciastko () {
-    ciastko = sprites.create(img`
-        . . 2 2 b b b b b . . . . . . . 
-        . 2 b 4 4 4 4 4 4 b . . . . . . 
-        2 2 4 4 4 4 d d 4 4 b . . . . . 
-        2 b 4 4 4 4 4 4 d 4 b . . . . . 
-        2 b 4 4 4 4 4 4 4 d 4 b . . . . 
-        2 b 4 4 4 4 4 4 4 4 4 b . . . . 
-        2 b 4 4 4 4 4 4 4 4 4 e . . . . 
-        2 2 b 4 4 4 4 4 4 4 b e . . . . 
-        . 2 b b b 4 4 4 b b b e . . . . 
-        . . e b b b b b b b e e . . . . 
-        . . . e e b 4 4 b e e e b . . . 
-        . . . . . e e e e e e b d b b . 
-        . . . . . . . . . . . b 1 1 1 b 
-        . . . . . . . . . . . c 1 d d b 
-        . . . . . . . . . . . c 1 b c . 
-        . . . . . . . . . . . . c c . . 
-        `, SpriteKind.Food)
+    if (Math.percentChance(50)) {
+        ciastko = sprites.create(img`
+            . . 2 2 b b b b b . . . . . . . 
+            . 2 b 4 4 4 4 4 4 b . . . . . . 
+            2 2 4 4 4 4 d d 4 4 b . . . . . 
+            2 b 4 4 4 4 4 4 d 4 b . . . . . 
+            2 b 4 4 4 4 4 4 4 d 4 b . . . . 
+            2 b 4 4 4 4 4 4 4 4 4 b . . . . 
+            2 b 4 4 4 4 4 4 4 4 4 e . . . . 
+            2 2 b 4 4 4 4 4 4 4 b e . . . . 
+            . 2 b b b 4 4 4 b b b e . . . . 
+            . . e b b b b b b b e e . . . . 
+            . . . e e b 4 4 b e e e b . . . 
+            . . . . . e e e e e e b d b b . 
+            . . . . . . . . . . . b 1 1 1 b 
+            . . . . . . . . . . . c 1 d d b 
+            . . . . . . . . . . . c 1 b c . 
+            . . . . . . . . . . . . c c . . 
+            `, SpriteKind.Food)
+        ciastko.z = 1
+    } else {
+        ciastko = sprites.create(img`
+            . . . . c c c b b b b b . . . . 
+            . . c c b 4 4 4 4 4 4 b b b . . 
+            . c c 4 4 4 4 4 5 4 4 4 4 b c . 
+            . e 4 4 4 4 4 4 4 4 4 5 4 4 e . 
+            e b 4 5 4 4 5 4 4 4 4 4 4 4 b c 
+            e b 4 4 4 4 4 4 4 4 4 4 5 4 4 e 
+            e b b 4 4 4 4 4 4 4 4 4 4 4 b e 
+            . e b 4 4 4 4 4 5 4 4 4 4 b e . 
+            8 7 e e b 4 4 4 4 4 4 b e e 6 8 
+            8 7 2 e e e e e e e e e e 2 7 8 
+            e 6 6 2 2 2 2 2 2 2 2 2 2 6 c e 
+            e c 6 7 6 6 7 7 7 6 6 7 6 c c e 
+            e b e 8 8 c c 8 8 c c c 8 e b e 
+            e e b e c c e e e e e c e b e e 
+            . e e b b 4 4 4 4 4 4 4 4 e e . 
+            . . . c c c c c e e e e e . . . 
+            `, SpriteKind.Food)
+        ciastko.z = 2
+    }
     tiles.placeOnRandomTile(ciastko, sprites.castle.tilePath5)
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
