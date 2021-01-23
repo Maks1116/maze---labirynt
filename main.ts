@@ -394,8 +394,11 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
     music.powerDown.play()
     info.changeLifeBy(-1)
+    scene.cameraShake(4, 200)
     sprite.destroy()
+    pause(1000)
     create_wroga()
+    tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath4)
 })
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
