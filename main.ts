@@ -518,7 +518,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     create_ciastko()
 })
 function create_ciastko () {
-    if (Math.percentChance(1)) {
+    if (Math.percentChance(20)) {
         ciastko = sprites.create(img`
             . . 2 2 b b b b b . . . . . . . 
             . 2 b 4 4 4 4 4 4 b . . . . . . 
@@ -538,7 +538,7 @@ function create_ciastko () {
             . . . . . . . . . . . . c c . . 
             `, SpriteKind.Food)
         ciastko.z = 1
-    } else if (Math.percentChance(1)) {
+    } else if (Math.percentChance(60)) {
         ciastko = sprites.create(img`
             . . . . c c c b b b b b . . . . 
             . . c c b 4 4 4 4 4 4 b b b . . 
@@ -584,10 +584,13 @@ function create_ciastko () {
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
     game.over(true)
 })
+// gfdhfhgdhdhf
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
     sprite.destroy()
-    create_wroga()
+    setTimeout(function() {
+        create_wroga()
+    }, 10000)
 })
 function create_rock () {
     mina = sprites.create(img`
