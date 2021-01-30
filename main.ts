@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const tttt = SpriteKind.create()
+    export const Landmine = SpriteKind.create()
 }
 function create_wroga () {
     wrog = sprites.create(img`
@@ -215,6 +216,19 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Landmine, function (sprite, otherSprite) {
+    sprite.destroy()
+    otherSprite.destroy()
+    music.pewPew.play()
+    create_wroga()
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (pocisk > 0) {
+        pocisk = 0
+        effects.clearParticles(mySprite)
+        create_missile()
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (ile_min >= 0) {
         ile_min += -1
@@ -299,12 +313,6 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     200,
     true
     )
-})
-sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
-    sprite.destroy()
-    otherSprite.destroy()
-    music.pewPew.play()
-    create_wroga()
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     animation.stopAnimation(animation.AnimationTypes.All, mySprite)
@@ -479,19 +487,38 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+function create_missile () {
+    missile = sprites.create(img`
+        . . . . . . . . 
+        . . . . . . . . 
+        . 2 2 2 2 2 2 . 
+        . 2 5 5 5 5 2 . 
+        . 2 5 f f 5 2 . 
+        . 2 5 f f 5 2 . 
+        . 2 5 5 5 5 2 . 
+        . 2 2 2 2 2 2 . 
+        `, SpriteKind.Projectile)
+    missile.lifespan = 20000
+    missile.setPosition(mySprite.x, mySprite.y)
+    missile.setVelocity(randint(40, 100), randint(40, 100))
+    missile.setBounceOnWall(true)
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     music.baDing.play()
-    otherSprite.destroy()
     if (otherSprite.z == 1) {
         controller.moveSprite(mySprite, 200, 200)
         info.startCountdown(10)
     } else if (otherSprite.z == 2) {
         ile_min += 1
+    } else if (otherSprite.z == 3) {
+        pocisk = 1
+        sprite.startEffect(effects.rings)
     }
+    otherSprite.destroy()
     create_ciastko()
 })
 function create_ciastko () {
-    if (Math.percentChance(50)) {
+    if (Math.percentChance(1)) {
         ciastko = sprites.create(img`
             . . 2 2 b b b b b . . . . . . . 
             . 2 b 4 4 4 4 4 4 b . . . . . . 
@@ -511,7 +538,7 @@ function create_ciastko () {
             . . . . . . . . . . . . c c . . 
             `, SpriteKind.Food)
         ciastko.z = 1
-    } else {
+    } else if (Math.percentChance(1)) {
         ciastko = sprites.create(img`
             . . . . c c c b b b b b . . . . 
             . . c c b 4 4 4 4 4 4 b b b . . 
@@ -531,11 +558,36 @@ function create_ciastko () {
             . . . c c c c c e e e e e . . . 
             `, SpriteKind.Food)
         ciastko.z = 2
+    } else {
+        ciastko = sprites.create(img`
+            . . . . . . . e c 7 . . . . . . 
+            . . . . e e e c 7 7 e e . . . . 
+            . . c e e e e c 7 e 2 2 e e . . 
+            . c e e e e e c 6 e e 2 2 2 e . 
+            . c e e e 2 e c c 2 4 5 4 2 e . 
+            c e e e 2 2 2 2 2 2 4 5 5 2 2 e 
+            c e e 2 2 2 2 2 2 2 2 4 4 2 2 e 
+            c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
+            c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
+            c e e 2 2 2 2 2 2 2 2 2 2 2 2 e 
+            c e e 2 2 2 2 2 2 2 2 2 2 4 2 e 
+            . e e e 2 2 2 2 2 2 2 2 2 4 e . 
+            . 2 e e 2 2 2 2 2 2 2 2 4 2 e . 
+            . . 2 e e 2 2 2 2 2 4 4 2 e . . 
+            . . . 2 2 e e 4 4 4 2 e e . . . 
+            . . . . . 2 2 e e e e . . . . . 
+            `, SpriteKind.Food)
+        ciastko.z = 3
     }
     tiles.placeOnRandomTile(ciastko, sprites.castle.tilePath5)
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
     game.over(true)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    sprite.destroy()
+    create_wroga()
 })
 function create_rock () {
     mina = sprites.create(img`
@@ -555,7 +607,7 @@ function create_rock () {
         . . . . . . . c . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Projectile)
+        `, SpriteKind.Landmine)
     animation.runImageAnimation(
     mina,
     [img`
@@ -635,7 +687,9 @@ function create_rock () {
 }
 let mina: Sprite = null
 let ciastko: Sprite = null
+let missile: Sprite = null
 let wrog: Sprite = null
+let pocisk = 0
 let ile_min = 0
 let mySprite: Sprite = null
 mySprite = sprites.create(img`
@@ -664,8 +718,9 @@ create_ciastko()
 create_wroga()
 info.setLife(3)
 ile_min = 5
+pocisk = 0
 game.onUpdate(function () {
-    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
+    for (let value of sprites.allOfKind(SpriteKind.Landmine)) {
         if (game.runtime() - value.z > 10000) {
             value.destroy()
         }
