@@ -2,6 +2,15 @@ namespace SpriteKind {
     export const tttt = SpriteKind.create()
     export const Landmine = SpriteKind.create()
 }
+function setLevel (lvl: number) {
+    if (lvl == 0) {
+        tiles.setTilemap(tilemap`level1`)
+    } else if (lvl == 1) {
+        tiles.setTilemap(tilemap`level2`)
+    } else if (lvl == 2) {
+        tiles.setTilemap(tilemap`level3`)
+    }
+}
 function create_wroga () {
     wrog = sprites.create(img`
         ........................
@@ -582,7 +591,26 @@ function create_ciastko () {
     tiles.placeOnRandomTile(ciastko, sprites.castle.tilePath5)
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
-    game.over(true)
+    level += 1
+    setLevel(level)
+    for (let value of sprites.allOfKind(SpriteKind.Landmine)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Food)) {
+        value.destroy()
+    }
+    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+        value.destroy()
+    }
+    tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath4)
+    info.setLife(3)
+    ile_min = 5
+    pocisk = 0
+    create_ciastko()
+    create_wroga()
 })
 // gfdhfhgdhdhf
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -695,6 +723,8 @@ let wrog: Sprite = null
 let pocisk = 0
 let ile_min = 0
 let mySprite: Sprite = null
+let level = 0
+level = 0
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
     . . . . f f f 2 2 f f f . . . . 
@@ -714,7 +744,7 @@ mySprite = sprites.create(img`
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 100)
-tiles.setTilemap(tilemap`level1`)
+setLevel(level)
 tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath4)
 scene.cameraFollowSprite(mySprite)
 create_ciastko()
