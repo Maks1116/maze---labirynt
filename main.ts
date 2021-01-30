@@ -7,6 +7,9 @@ function setLevel (lvl: number) {
         tiles.setTilemap(tilemap`level1`)
     } else if (lvl == 1) {
         tiles.setTilemap(tilemap`level2`)
+        setTimeout(function() {
+            musik()
+        }, 0)
     } else if (lvl == 2) {
         tiles.setTilemap(tilemap`level3`)
     }
@@ -226,10 +229,12 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Landmine, function (sprite, otherSprite) {
+    musicPlayable = false
     sprite.destroy()
     otherSprite.destroy()
     music.pewPew.play()
     create_wroga()
+    musicPlayable = true
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (pocisk > 0) {
@@ -590,20 +595,33 @@ function create_ciastko () {
     }
     tiles.placeOnRandomTile(ciastko, sprites.castle.tilePath5)
 }
+function musik () {
+    while (true) {
+        if (musicPlayable) {
+            music.playMelody("E B C5 A B G A F ", 120)
+        }
+        if (musicPlayable) {
+            music.playMelody("B A G A G F A C5 ", 120)
+        }
+        if (musicPlayable) {
+            music.playMelody("G B A G C5 B A B ", 120)
+        }
+    }
+}
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
     level += 1
     setLevel(level)
     for (let value of sprites.allOfKind(SpriteKind.Landmine)) {
         value.destroy()
     }
-    for (let value of sprites.allOfKind(SpriteKind.Projectile)) {
-        value.destroy()
+    for (let value2 of sprites.allOfKind(SpriteKind.Projectile)) {
+        value2.destroy()
     }
-    for (let value of sprites.allOfKind(SpriteKind.Food)) {
-        value.destroy()
+    for (let value3 of sprites.allOfKind(SpriteKind.Food)) {
+        value3.destroy()
     }
-    for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
-        value.destroy()
+    for (let value4 of sprites.allOfKind(SpriteKind.Enemy)) {
+        value4.destroy()
     }
     tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath4)
     info.setLife(3)
@@ -611,6 +629,8 @@ scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprit
     pocisk = 0
     create_ciastko()
     create_wroga()
+    controller.moveSprite(mySprite, 100, 100)
+    scene.cameraFollowSprite(mySprite)
 })
 // gfdhfhgdhdhf
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -716,9 +736,13 @@ function create_rock () {
     mina.setPosition(mySprite.x, mySprite.y)
     mina.z = game.runtime()
 }
+/**
+ * Gdy chcemy uruchomić efekt dźwiękowy ta zmienna pozwoli nam na wyłączenie muzyki
+ */
 let mina: Sprite = null
 let ciastko: Sprite = null
 let missile: Sprite = null
+let musicPlayable = false
 let wrog: Sprite = null
 let pocisk = 0
 let ile_min = 0
@@ -753,9 +777,9 @@ info.setLife(3)
 ile_min = 5
 pocisk = 0
 game.onUpdate(function () {
-    for (let value of sprites.allOfKind(SpriteKind.Landmine)) {
-        if (game.runtime() - value.z > 10000) {
-            value.destroy()
+    for (let value5 of sprites.allOfKind(SpriteKind.Landmine)) {
+        if (game.runtime() - value5.z > 10000) {
+            value5.destroy()
         }
     }
 })
