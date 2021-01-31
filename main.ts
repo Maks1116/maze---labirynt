@@ -737,9 +737,6 @@ function create_rock () {
     mina.setPosition(mySprite.x, mySprite.y)
     mina.z = game.runtime()
 }
-/**
- * Gdy chcemy uruchomić efekt dźwiękowy ta zmienna pozwoli nam na wyłączenie muzyki
- */
 let mina: Sprite = null
 let ciastko: Sprite = null
 let missile: Sprite = null
