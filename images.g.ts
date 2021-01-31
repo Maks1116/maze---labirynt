@@ -3,7 +3,7 @@ namespace myImages {
 
     helpers._registerFactory("image", function(name: string) {
         switch(helpers.stringTrim(name)) {
-            case "image6":return img`
+            case "image8":return img`
 ........................
 ........................
 ........................
@@ -29,17 +29,7 @@ namespace myImages {
 ........................
 ........................
 `;
-            case "image7":return img`
-. . . . . . . . 
-. . . . . . . . 
-. 2 2 2 2 2 2 . 
-. 2 5 5 5 5 2 . 
-. 2 5 f f 5 2 . 
-. 2 5 f f 5 2 . 
-. 2 5 5 5 5 2 . 
-. 2 2 2 2 2 2 . 
-`;
-            case "image8":return img`
+            case "image10":return img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -57,7 +47,7 @@ namespace myImages {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `;
-            case "image9":return img`
+            case "image11":return img`
 . . 2 2 b b b b b . . . . . . . 
 . 2 b 4 4 4 4 4 4 b . . . . . . 
 2 2 4 4 4 4 d d 4 4 b . . . . . 
@@ -75,7 +65,7 @@ namespace myImages {
 . . . . . . . . . . . c 1 b c . 
 . . . . . . . . . . . . c c . . 
 `;
-            case "image10":return img`
+            case "image12":return img`
 . . . . c c c b b b b b . . . . 
 . . c c b 4 4 4 4 4 4 b b b . . 
 . c c 4 4 4 4 4 5 4 4 4 4 b c . 
@@ -93,7 +83,7 @@ e e b e c c e e e e e c e b e e
 . e e b b 4 4 4 4 4 4 4 4 e e . 
 . . . c c c c c e e e e e . . . 
 `;
-            case "image11":return img`
+            case "image13":return img`
 . . . . . . . e c 7 . . . . . . 
 . . . . e e e c 7 7 e e . . . . 
 . . c e e e e c 7 e 2 2 e e . . 
@@ -111,7 +101,7 @@ c e e 2 2 2 2 2 2 2 2 2 2 4 2 e
 . . . 2 2 e e 4 4 4 2 e e . . . 
 . . . . . 2 2 e e e e . . . . . 
 `;
-            case "image12":return img`
+            case "image14":return img`
 . . . . . . f f f f . . . . . . 
 . . . . f f f 2 2 f f f . . . . 
 . . . f f f 2 2 2 2 f f f . . . 
@@ -128,6 +118,16 @@ c e e 2 2 2 2 2 2 2 2 2 2 4 2 e
 . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
 . . . . . f f f f f f . . . . . 
 . . . . . f f . . f f . . . . . 
+`;
+            case "image9":return img`
+. . . . . . . . 
+. . . . . . . . 
+. d 2 2 2 2 d . 
+. 2 4 5 5 4 2 . 
+. 2 5 f f 5 2 . 
+. 2 5 f f 5 2 . 
+. 2 4 5 5 4 2 . 
+. d 2 2 2 2 d . 
 `;
             case "image1":return img`
 ........................
@@ -219,7 +219,7 @@ e e b e c c e e e e e c e b e e
 . e e b b 4 4 4 4 4 4 4 4 e e . 
 . . . c c c c c e e e e e . . . 
 `;
-            case "image13":return img`
+            case "image6":return img`
 . . . . . . . e c 7 . . . . . . 
 . . . . e e e c 7 7 e e . . . . 
 . . c e e e e c 7 e 2 2 e e . . 
@@ -237,7 +237,7 @@ c e e 2 2 2 2 2 2 2 2 2 2 4 2 e
 . . . 2 2 e e 4 4 4 2 e e . . . 
 . . . . . 2 2 e e e e . . . . . 
 `;
-            case "image14":return img`
+            case "image7":return img`
 . . . . . . f f f f . . . . . . 
 . . . . f f f 2 2 f f f . . . . 
 . . . f f f 2 2 2 2 f f f . . . 

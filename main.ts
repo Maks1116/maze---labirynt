@@ -1,5 +1,4 @@
 namespace SpriteKind {
-    export const tttt = SpriteKind.create()
     export const Landmine = SpriteKind.create()
 }
 function setLevel (lvl: number) {
@@ -8,7 +7,7 @@ function setLevel (lvl: number) {
     } else if (lvl == 1) {
         tiles.setTilemap(tilemap`level2`)
     } else if (lvl == 2) {
-        tiles.setTilemap(tilemap`level3`)
+        tiles.setTilemap(tilemap`level0`)
     }
 }
 function create_wroga () {
@@ -247,7 +246,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+	
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -326,10 +325,10 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+	
 })
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+	
 })
 info.onCountdownEnd(function () {
     controller.moveSprite(mySprite, 100, 100)
@@ -411,16 +410,18 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Player, function (sprite, otherSprite) {
+    otherSprite.startEffect(effects.fire, 1000)
     music.powerDown.play()
     info.changeLifeBy(-1)
-    scene.cameraShake(4, 200)
+    scene.cameraShake(4, 500)
     sprite.destroy()
-    pause(1000)
+    pause(2000)
     create_wroga()
+    effects.clearParticles(otherSprite)
     tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath4)
 })
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, mySprite)
+	
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -502,12 +503,12 @@ function create_missile () {
     missile = sprites.create(img`
         . . . . . . . . 
         . . . . . . . . 
-        . 2 2 2 2 2 2 . 
-        . 2 5 5 5 5 2 . 
+        . d 2 2 2 2 d . 
+        . 2 4 5 5 4 2 . 
         . 2 5 f f 5 2 . 
         . 2 5 f f 5 2 . 
-        . 2 5 5 5 5 2 . 
-        . 2 2 2 2 2 2 . 
+        . 2 4 5 5 4 2 . 
+        . d 2 2 2 2 d . 
         `, SpriteKind.Projectile)
     missile.lifespan = 20000
     missile.setPosition(mySprite.x, mySprite.y)
@@ -606,6 +607,7 @@ function musik () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
+    music.powerUp.play()
     level += 1
     setLevel(level)
     for (let value of sprites.allOfKind(SpriteKind.Landmine)) {
@@ -631,9 +633,11 @@ scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprit
 })
 // gfdhfhgdhdhf
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.pewPew.play()
     otherSprite.destroy()
     sprite.destroy()
     setTimeout(function() {
+        music.magicWand.play()
         create_wroga()
     }, 10000)
 })
