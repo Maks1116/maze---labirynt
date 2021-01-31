@@ -769,6 +769,34 @@ mySprite = sprites.create(img`
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
 controller.moveSprite(mySprite, 100, 100)
+let new_levels = [img`
+    f f f f f f f f f f 
+    f f f f f f f f f f 
+    f f f f f f f f f f 
+    f 4 f f f f f f 7 f 
+    f f f f f f f f f f 
+    f f f f f f f f f f 
+    f f f f f f f f f f 
+    f f f f f f f f f f 
+    `, img`
+    9 9 9 9 9 9 9 9 9 9 
+    9 9 9 9 9 9 9 9 9 9 
+    9 9 9 9 9 9 9 9 9 9 
+    9 4 9 9 9 9 9 9 7 9 
+    9 9 9 9 9 9 9 9 9 9 
+    9 9 9 9 9 9 9 9 9 9 
+    9 9 9 9 9 9 9 9 9 9 
+    9 9 9 9 9 9 9 9 9 9 
+    `, img`
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 4 3 3 3 3 3 3 7 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    3 3 3 3 3 3 3 3 3 3 
+    `]
 setLevel(level)
 tiles.placeOnRandomTile(mySprite, sprites.castle.tilePath4)
 scene.cameraFollowSprite(mySprite)
