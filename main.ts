@@ -6,8 +6,18 @@ function setLevel (lvl: number) {
         tiles.setTilemap(tilemap`level1`)
     } else if (lvl == 1) {
         tiles.setTilemap(tilemap`level2`)
+        create_wroga()
+        create_wroga()
+        create_ciastko()
+        create_ciastko()
     } else if (lvl == 2) {
         tiles.setTilemap(tilemap`level0`)
+        create_wroga()
+        create_wroga()
+        create_ciastko()
+        create_ciastko()
+    } else {
+        game.over(true)
     }
 }
 function create_wroga () {
@@ -594,17 +604,19 @@ function create_ciastko () {
     tiles.placeOnRandomTile(ciastko, sprites.castle.tilePath5)
 }
 function musik () {
-    while (true) {
-        if (musicPlayable) {
-            music.playMelody("E B C5 A B G A F ", 120)
-        }
-        if (musicPlayable) {
-            music.playMelody("B A G A G F A C5 ", 120)
-        }
-        if (musicPlayable) {
-            music.playMelody("G B A G C5 B A B ", 120)
-        }
-    }
+    setTimeout(function() {
+       while (true) {
+            if (musicPlayable) {
+                music.playMelody("E B C5 A B G A F ", 120)
+            }
+            if (musicPlayable) {
+                music.playMelody("B A G A G F A C5 ", 120)
+            }
+            if (musicPlayable) {
+                music.playMelody("G B A G C5 B A B ", 120)
+            }
+        } 
+    }, 0)
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath6, function (sprite, location) {
     music.powerUp.play()
@@ -740,12 +752,12 @@ function create_rock () {
 let mina: Sprite = null
 let ciastko: Sprite = null
 let missile: Sprite = null
-let musicPlayable = false
 let wrog: Sprite = null
 let pocisk = 0
 let ile_min = 0
 let mySprite: Sprite = null
 let level = 0
+let musicPlayable = false
 level = 0
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
