@@ -636,7 +636,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
     music.pewPew.play()
     otherSprite.destroy()
     sprite.destroy()
-    setTimeout(function() {
+    setTimeout(function on_set_timeout() {
         music.magicWand.play()
         create_wroga()
     }, 10000)
